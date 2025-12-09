@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Eye, Layers, Cpu, Code2 } from 'lucide-react';
 
 const Section = ({ title, children, className = "" }) => (
-  <section className={`py-16 border-b border-gray-100 ${className}`}>
+  <section className={`py-16 border-b border-gray-100 relative z-10 ${className}`}>
     <div className="max-w-3xl mx-auto px-6">
       <h2 className="text-3xl font-bold text-gray-800 mb-8">{title}</h2>
       <div className="text-lg text-gray-600 leading-relaxed space-y-6">
@@ -31,12 +31,14 @@ const InfoCard = ({ icon: Icon, title, children }) => (
 
 const Home = () => {
   return (
-    <div className="w-full bg-white pb-32">
+    <div className="w-full bg-white pb-32 relative min-h-screen">
+      {/* Global Tech Mesh Background */}
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none h-full" />
+      
       {/* Hero Header */}
       <header className="py-24 px-6 text-center relative overflow-hidden">
-        {/* Tech Mesh Background Overlay */}
+        {/* Gradient Overlay */}
         <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/50 via-slate-50/0 to-transparent opacity-70" />
-        <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold mb-6 border border-blue-100 shadow-sm animate-fade-in-up">
