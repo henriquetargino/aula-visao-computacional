@@ -3,46 +3,39 @@ import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, FlaskConical } from 'lucide-react';
 
 const Sidebar = () => {
-  const location = useLocation(); // Pega a URL atual para saber onde estamos
+  const location = useLocation();
 
-  // Componente interno para cada item do menu
   const NavItem = ({ to, icon: Icon, label }) => {
-    // CORREÇÃO AQUI: Definimos o que é "isActive" comparando a URL atual com o link do botão
     const isActive = location.pathname === to;
 
     return (
       <Link
         to={to}
-        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-medium border ${
           isActive
-            ? 'bg-blue-600 text-white' // Cor quando está ativo
-            : 'text-slate-400 hover:bg-slate-800 hover:text-white' // Cor normal
+            ? 'bg-blue-50 border-blue-100 text-blue-700 shadow-sm' 
+            : 'border-transparent text-slate-600 hover:bg-gray-50 hover:text-slate-900'
         }`}
       >
         <Icon size={20} />
-        <span className="font-medium">{label}</span>
+        <span>{label}</span>
       </Link>
     );
   };
 
   return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-screen">
-      <div className="p-6 border-b border-slate-800">
-        <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-          VisionLab Pro
+    <aside className="w-72 bg-white flex flex-col h-full">
+      <div className="p-8 border-b border-gray-100/50">
+        <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+          Aula<span className="text-blue-600">.</span>HT
         </h1>
+        <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Henrique Targino</p>
       </div>
 
-      <nav className="flex-1 p-4 space-y-2">
-        <NavItem to="/" icon={LayoutDashboard} label="Dashboard" />
-        <NavItem to="/lab" icon={FlaskConical} label="Laboratório" />
+      <nav className="flex-1 p-6 space-y-2">
+        <NavItem to="/" icon={LayoutDashboard} label="Apresentação" />
+        <NavItem to="/lab" icon={FlaskConical} label="Laboratório OpenCV" />
       </nav>
-
-      <div className="p-4 border-t border-slate-800">
-        <p className="text-xs text-slate-500 text-center">
-          v1.0.0 Alpha
-        </p>
-      </div>
     </aside>
   );
 };

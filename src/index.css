@@ -5,46 +5,41 @@
 @tailwind utilities;
 
 :root {
-  --bg-dark: #0d1117;
-  --bg-panel: #161b22;
-  --border: #30363d;
+  --bg-page: #ffffff;
+  --bg-panel: #f3f4f6; /* gray-100 */
+  --border: #e5e7eb; /* gray-200 */
+  --text-primary: #111827; /* gray-900 */
+  --text-secondary: #4b5563; /* gray-600 */
 }
 
 body {
-  background-color: var(--bg-dark);
-  color: #c9d1d9;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
 
-/* Scrollbar Customizada */
+/* Scrollbar Customizada Clean */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #30363d;
+  background: #d1d5db; /* gray-300 */
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #58a6ff;
-}
-
-/* Utilitários de Vidro */
-.glass {
-  background: rgba(22, 27, 34, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #9ca3af; /* gray-400 */
 }
 
 .loader {
     width: 24px;
     height: 24px;
-    border: 3px solid #30363d;
-    border-bottom-color: #06b6d4;
+    border: 3px solid #e5e7eb;
+    border-bottom-color: #0ea5e9; /* sky-500 */
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -54,4 +49,74 @@ body {
 @keyframes rotation {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar for Editor */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 5px;
+  border: 2px solid #1e1e1e;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
+}
+
+/* PrismJS Overrides for better VS Code Look - High Specificity */
+div code[class*="language-"],
+div pre[class*="language-"] {
+  font-family: 'Fira Code', 'Fira Mono', monospace !important;
+  font-size: 14px !important;
+  text-shadow: none !important;
+}
+
+/* Functions - Yellow */
+div .token.function, 
+div .token.function-name {
+  color: #DCDCAA !important; 
+}
+
+/* Methods (if tokenized differently) */
+div .token.method {
+  color: #DCDCAA !important;
+}
+
+/* Classes - Teal */
+div .token.class-name {
+  color: #4EC9B0 !important; 
+}
+
+/* Keywords - Blue */
+div .token.keyword {
+  color: #569CD6 !important; 
+}
+
+/* Strings - Orange */
+div .token.string {
+  color: #CE9178 !important; 
+}
+
+/* Comments - Green */
+div .token.comment {
+  color: #6A9955 !important; 
+}
+
+/* Operators/Punctuation - Grey/White */
+div .token.operator,
+div .token.punctuation {
+  color: #D4D4D4 !important;
+}
+
+div .token.number {
+  color: #B5CEA8 !important;
+}
+
+div .token.builtin {
+  color: #4EC9B0 !important;
 }
