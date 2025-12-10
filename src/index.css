@@ -120,3 +120,40 @@ div .token.number {
 div .token.builtin {
   color: #4EC9B0 !important;
 }
+
+@layer utilities {
+  .animate-ping-slow {
+    animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  .animate-scan-fast {
+    animation: scan 3s linear infinite;
+  }
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(50%); }
+  }
+  .animate-sway-slow {
+    animation: sway 8s ease-in-out infinite;
+  }
+  @keyframes sway {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, 5px) rotate(1deg); }
+    50% { transform: translate(0, 10px) rotate(0deg); }
+    75% { transform: translate(-5px, 5px) rotate(-1deg); }
+  }
+  
+  .animate-draw-arrow {
+    animation: drawArrow 1s ease-out forwards;
+  }
+  @keyframes drawArrow {
+    from { opacity: 0; stroke-dasharray: 0 1000; }
+    to { opacity: 1; stroke-dasharray: 1000 1000; }
+  }
+}

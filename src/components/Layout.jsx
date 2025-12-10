@@ -30,7 +30,7 @@ const Layout = () => {
 
       <main className="flex-1 relative overflow-y-auto scroll-smooth z-10">
          <div className="relative w-full h-full"> 
-            <Outlet />
+            <Outlet context={{ isSidebarOpen }} />
          </div>
          
          {/* Hamburger Open Button (Only visible when Closed) */}

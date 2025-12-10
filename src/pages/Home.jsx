@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { ArrowRight, Eye, Layers, Cpu, Code2 } from 'lucide-react';
+import ScatterImages from '../components/hero/ScatterImages';
 
 const Section = ({ title, children, className = "" }) => (
   <section className={`py-16 border-b border-gray-100 relative z-10 ${className}`}>
@@ -30,6 +31,8 @@ const InfoCard = ({ icon: Icon, title, children }) => (
 );
 
 const Home = () => {
+  const { isSidebarOpen } = useOutletContext();
+
   return (
     <div className="w-full bg-white pb-32 relative min-h-screen">
       {/* Global Tech Mesh Background */}
@@ -44,21 +47,21 @@ const Home = () => {
           <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold mb-6 border border-blue-100 shadow-sm animate-fade-in-up">
             Apresentação Interativa
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tight drop-shadow-sm">
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tight drop-shadow-sm relative z-10">
             Introdução à <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Visão Computacional</span>
           </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Bem-vindo à aula. Vamos explorar como computadores interpretam o mundo visual e aprender na prática com Python e OpenCV.
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed font-light relative z-10">
+            Como as máquinas veem? O que elas entendem? <br />
+            <span className="font-medium text-slate-800">Vamos descobrir na aula de hoje!</span>
           </p>
-          <Link 
-            to="/lab"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 ring-4 ring-blue-50"
-          >
-            Ir para o Laboratório
-            <ArrowRight size={20} />
-          </Link>
+          
+          <div className="h-24" /> {/* Spacer */}
         </div>
+
+        {/* User Scatter Images (Full Width) */}
+        <ScatterImages isSidebarOpen={isSidebarOpen} />
       </header>
+
 
       {/* Conteúdo da Aula */}
       <Section title="O que é uma Imagem Digital?">
