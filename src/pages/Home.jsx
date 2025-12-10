@@ -39,7 +39,7 @@ const Home = () => {
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none h-full" />
       
       {/* Hero Header */}
-      <header className="py-24 px-6 text-center relative overflow-hidden">
+      <header className="min-h-screen flex flex-col justify-center items-center px-6 text-center relative overflow-hidden">
         {/* Gradient Overlay */}
         <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/50 via-slate-50/0 to-transparent opacity-70" />
 
@@ -63,82 +63,126 @@ const Home = () => {
       </header>
 
 
-      {/* Conteúdo da Aula */}
-      <Section title="O que é uma Imagem Digital?">
-        <p>
-          Para nós, uma imagem é uma representação visual de objetos, pessoas e cenários. 
-          Mas para o computador, uma imagem não passa de uma <strong>vasta matriz numérica</strong>.
+      {/* --- Section 1: Aplicações no Dia a Dia --- */}
+      <Section title="Visão Computacional no Cotidiano">
+        <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+          Você já usou visão computacional hoje, talvez sem perceber. Ela saiu dos filmes de ficção científica e agora vive no seu bolso.
         </p>
-        <p>
-          Imagine uma grade gigante semelhante a uma planilha de Excel. Cada célula dessa grade é um <strong>pixel</strong> (picture element).
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-          <InfoCard icon={Layers} title="Matriz de Pixels">
-            Uma imagem Full HD (1920x1080) contém mais de 2 milhões de pixels. Cada um armazena informações de cor.
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <InfoCard icon={Eye} title="FaceID & Biometria">
+            Seu celular desbloqueia mapeando 30.000 pontos infravermelhos no seu rosto em milissegundos. Isso é visão computacional pura.
           </InfoCard>
-          <InfoCard icon={Eye} title="Canais de Cor">
-            Normalmente usamos 3 canais: Vermelho (R), Verde (G) e Azul (B). Juntos, formam todas as cores que vemos.
+          <InfoCard icon={Layers} title="Redes Sociais & Filtros">
+            Aquele filtro de "orelha de cachorro" no Instagram? Ele usa <em>Face Mesh</em> para rastrear seus movimentos e ancorar objetos 3D.
+          </InfoCard>
+          <InfoCard icon={Cpu} title="Carros Autônomos">
+            Carros modernos "leem" placas, detectam pedestres e calculam a distância de outros veículos usando câmeras, não apenas radares.
+          </InfoCard>
+          <InfoCard icon={ArrowRight} title="Diagnóstico Médico">
+            IAs analisam Raio-X e Ressonâncias para detectar anomalias (como tumores) com precisão muitas vezes superior à humana.
           </InfoCard>
         </div>
       </Section>
 
-      <Section title="OpenCV: A Ferramenta Padrão">
-        <p>
-          O OpenCV (Open Source Computer Vision Library) é a biblioteca mais utilizada no mundo para processamento de imagens em tempo real.
-          Originalmente escrita em C++, ela possui uma interface Python extremamente poderosa que vamos usar hoje.
-        </p>
-        <p>
-          No nosso laboratório, usamos uma versão especial chamada <strong>opencv-python-headless</strong> rodando diretamente no seu navegador via WebAssembly.
-        </p>
+      {/* --- Section 2: Teoria (Pixels) --- */}
+      <Section title="A Mágica: Tudo são Números" className="bg-slate-50">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex-1 space-y-6">
+            <p className="text-lg">
+              Para nós, uma imagem é uma memória visual. Para o computador, é apenas uma <strong>Planilha Gigante</strong>.
+            </p>
+            <p className="text-lg">
+              Cada quadrado minúsculo é um <strong>Pixel</strong>. Cada pixel é apenas um número de 0 (preto) a 255 (branco).
+            </p>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                <Layers className="text-blue-500" size={20} /> O Sistema RGB
+              </h4>
+              <p className="text-sm text-gray-600">
+                Imagens coloridas são na verdade 3 planilhas empilhadas:
+                <br/>
+                <span className="text-red-500 font-bold">R</span>ed (Vermelho), 
+                <span className="text-green-500 font-bold"> G</span>reen (Verde), 
+                <span className="text-blue-500 font-bold"> B</span>lue (Azul).
+                <br/>
+                Misturando esses 3 números, criamos 16 milhões de cores.
+              </p>
+            </div>
+          </div>
+          
+          {/* Visual Metaphor for Grid */}
+          <div className="flex-1 relative group">
+             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl md:rotate-3 group-hover:rotate-6 transition-transform opacity-20"></div>
+             <div className="relative bg-white p-2 rounded-2xl shadow-xl border border-gray-100 grid grid-cols-8 gap-1 w-64 h-64 mx-auto content-center justify-center">
+                {Array.from({ length: 64 }).map((_, i) => (
+                  <div key={i} className={`w-full h-full rounded-sm transition-colors duration-500 hover:bg-blue-500 ${i % 7 === 0 ? 'bg-blue-100' : 'bg-gray-100'}`} />
+                ))}
+             </div>
+             <p className="text-center text-xs text-gray-400 mt-4">Uma "matriz" visual de 8x8 pixels</p>
+          </div>
+        </div>
       </Section>
 
-      <Section title="Exemplo: Detecção de Bordas (Canny)">
-        <p>
-          Um dos algoritmos mais fundamentais é o <strong>Canny Edge Detector</strong>. Ele nos ajuda a encontrar as "linhas" que definem formas em uma imagem.
+      {/* --- Section 3: OpenCV --- */}
+      <Section title="A Ferramenta: OpenCV">
+        <p className="text-lg mb-8">
+          Criada pela Intel em 1999, a <strong>OpenCV</strong> (Open Source Computer Vision Library) é a biblioteca padrão da indústria.
         </p>
-        <p>
-          O processo simplificado é:
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="text-center p-6 bg-gray-900 text-white rounded-xl">
+                <div className="text-4xl font-black text-blue-400 mb-2">2.500+</div>
+                <div className="text-sm font-medium opacity-80">Algoritmos Otimizados</div>
+            </div>
+            <div className="text-center p-6 bg-gray-900 text-white rounded-xl">
+                <div className="text-4xl font-black text-green-400 mb-2">47.000+</div>
+                <div className="text-sm font-medium opacity-80">Membros na Comunidade</div>
+            </div>
+            <div className="text-center p-6 bg-gray-900 text-white rounded-xl">
+                <div className="text-4xl font-black text-purple-400 mb-2">C++ / Py</div>
+                <div className="text-sm font-medium opacity-80">Multi-Linguagem</div>
+            </div>
+        </div>
+
+        <p className="text-lg mb-4">
+          Vamos ver como o computador vê bordas com apenas 3 linhas de código:
         </p>
-        <ol className="list-decimal list-inside space-y-2 ml-4 marker:font-bold marker:text-blue-600">
-          <li>Carregar a imagem original</li>
-          <li>Converter para Tons de Cinza (simplifica os dados)</li>
-          <li>Aplicar um filtro para reduzir ruído (Blur)</li>
-          <li>Calcular o gradiente de intensidade (onde a cor muda bruscamente)</li>
-        </ol>
 
         <CodeBlock code={`import cv2
 
-# 1. Carregar imagem
-img = cv2.imread('foto.jpg')
+# 1. Carregar a câmera ou imagem
+img = cv2.imread('minha_foto.jpg')
 
-# 2. Converter para cinza
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# 2. Detectar bordas (Algoritmo Canny)
+# Ele procura onde a cor muda bruscamente (ex: branco para preto)
+bordas = cv2.Canny(img, 100, 200)
 
-# 3. Detectar bordas
-edges = cv2.Canny(gray, 100, 200)`} />
-        
-        <p>
-          No laboratório ao lado, você poderá rodar exatamente este código e ver o resultado instantaneamente!
-        </p>
+# 3. Mostrar o resultado
+cv2.imshow('Bordas Detectadas', bordas)`} />
       </Section>
 
-      <Section title="Próximos Passos">
-        <p>
-          Agora que você entende o conceito básico de que imagens são números e que podemos manipulá-las matematicamente, é hora de colocar a mão na massa.
-        </p>
-        <div className="bg-gray-50 p-8 rounded-2xl text-center mt-8">
-          <Cpu size={48} className="mx-auto text-blue-600 mb-4" />
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Ambiente Configurado</h3>
-          <p className="text-gray-600 mb-6">
-            Preparamos um ambiente Python completo rodando no seu navegador. Nada para instalar.
-          </p>
-          <Link 
-            to="/lab"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors"
-          >
-            Começar Experimento <Code2 size={18} />
-          </Link>
+      {/* --- Section 4: CTA --- */}
+      <Section title="Hora da Prática!">
+        <div className="bg-gradient-to-br from-blue-900 to-indigo-900 p-12 rounded-3xl text-center text-white relative overflow-hidden shadow-2xl mx-auto max-w-4xl">
+           {/* Background Decoration */}
+           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+           
+           <div className="relative z-10">
+              <Cpu size={64} className="mx-auto text-blue-300 mb-6 animate-pulse" />
+              <h3 className="text-3xl font-bold mb-4">Seu Laboratório Está Pronto</h3>
+              <p className="text-blue-100 text-lg mb-8 max-w-xl mx-auto">
+                Não precisa instalar nada. Configurei um ambiente Python completo com OpenCV rodando diretamente no seu navegador.
+              </p>
+              
+              <Link 
+                to="/lab"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-blue-900 rounded-full font-bold text-lg hover:bg-blue-50 transition-all hover:scale-105 shadow-lg group"
+              >
+                <Code2 size={24} className="group-hover:rotate-12 transition-transform" />
+                Acessar Laboratório Agora
+              </Link>
+          </div>
         </div>
       </Section>
     </div>

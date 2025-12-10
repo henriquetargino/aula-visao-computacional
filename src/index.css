@@ -156,4 +156,27 @@ div .token.builtin {
     from { opacity: 0; stroke-dasharray: 0 1000; }
     to { opacity: 1; stroke-dasharray: 1000 1000; }
   }
+  
+  .animate-stack-1 {
+    animation: stack 6s ease-out forwards;
+    animation-delay: 0s;
+  }
+  .animate-stack-2 {
+    animation: stack 6s ease-out forwards;
+    animation-delay: 0.2s;
+  }
+  .animate-stack-3 {
+    animation: stack 6s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes stack {
+    0% { opacity: 0; transform: translateY(5px); }
+    /* First Appear */
+    5%, 40% { opacity: 1; transform: translateY(0); }
+    /* Reset (Disappear) */
+    45%, 55% { opacity: 0; transform: translateY(5px); }
+    /* Second Appear (Final) */
+    60%, 100% { opacity: 1; transform: translateY(0); }
+  }
 }

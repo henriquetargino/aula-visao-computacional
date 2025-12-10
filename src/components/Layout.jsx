@@ -4,7 +4,7 @@ import { ChevronLeft, Menu } from 'lucide-react';
 import Sidebar from './Sidebar';
 
 const Layout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900 relative">
@@ -40,7 +40,12 @@ const Layout = () => {
                 className="fixed left-6 top-6 z-50 p-2 bg-white/80 backdrop-blur-sm hover:bg-white text-slate-600 hover:text-blue-600 rounded-lg shadow-sm border border-gray-200 transition-all hover:shadow-md group"
                 title="Expandir Menu"
              >
-                <Menu size={24} />
+                {/* Custom Stacking Hamburger */}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="12" x2="20" y2="12" className="animate-stack-2" /> {/* Middle - Second */}
+                  <line x1="4" y1="6" x2="20" y2="6" className="animate-stack-3" />  {/* Top - Last */}
+                  <line x1="4" y1="18" x2="20" y2="18" className="animate-stack-1" /> {/* Bottom - First */}
+                </svg>
              </button>
          )}
       </main>
