@@ -4,10 +4,10 @@ import { ArrowRight, Eye, Layers, Cpu, Code2 } from 'lucide-react';
 import ScatterImages from '../components/hero/ScatterImages';
 
 const Section = ({ title, children, className = "" }) => (
-  <section className={`py-16 border-b border-gray-100 relative z-10 ${className}`}>
-    <div className="max-w-3xl mx-auto px-6">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">{title}</h2>
-      <div className="text-lg text-gray-600 leading-relaxed space-y-6">
+  <section className={`py-16 border-b border-gray-100 relative z-10 min-h-screen flex flex-col justify-center ${className}`}>
+    <div className="max-w-3xl mx-auto px-6 w-full">
+      <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">{title}</h2>
+      <div className="text-lg md:text-xl text-gray-600 leading-relaxed space-y-6">
         {children}
       </div>
     </div>
@@ -21,7 +21,7 @@ const CodeBlock = ({ code }) => (
 );
 
 const InfoCard = ({ icon: Icon, title, children }) => (
-  <div className="bg-blue-50 border border-blue-100 p-6 rounded-xl">
+  <div className="bg-blue-50 border border-blue-100 p-6 rounded-xl transition-transform hover:-translate-y-1 duration-300">
     <div className="flex items-center gap-3 mb-3 text-blue-800">
       <Icon size={24} />
       <h3 className="font-bold">{title}</h3>
@@ -34,12 +34,12 @@ const Home = () => {
   const { isSidebarOpen } = useOutletContext();
 
   return (
-    <div className="w-full bg-white pb-32 relative min-h-screen">
+    <div className="w-full bg-white pb-0 relative">
       {/* Global Tech Mesh Background */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none h-full" />
+      <div className="fixed inset-0 z-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
       
       {/* Hero Header */}
-      <header className="min-h-screen flex flex-col justify-center items-center px-6 text-center relative overflow-hidden">
+      <header className="min-h-screen flex flex-col justify-center items-center px-6 text-center relative overflow-hidden bg-white/50 backdrop-blur-sm z-10">
         {/* Gradient Overlay */}
         <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/50 via-slate-50/0 to-transparent opacity-70" />
 
@@ -63,10 +63,131 @@ const Home = () => {
       </header>
 
 
-      {/* --- Section 1: Aplicações no Dia a Dia --- */}
+      {/* --- Section 0: Introdução (Matriz Numérica) --- */}
+      <Section title="O Que é uma Imagem Digital?">
+         <p className="text-xl text-center text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+            Para nós, uma imagem é uma representação visual de objetos, pessoas e cenários.
+            Mas para o computador, uma imagem não passa de uma <span className="font-bold text-blue-600">vasta matriz numérica</span>.
+         </p>
+
+         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 md:gap-16">
+            
+            {/* Visual 1: O Que Vemos (Pixel Art) */}
+            <div className="flex flex-col items-center space-y-4 group">
+                <div className="relative w-64 h-64 bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white grid grid-cols-8 gap-0.5 p-1 transition-transform duration-500 hover:scale-105">
+                     {/* 8x8 Smiley Face Data */}
+                     {[
+                        0,0,0,0,0,0,0,0,
+                        0,0,1,0,0,1,0,0,
+                        0,0,1,0,0,1,0,0,
+                        0,0,0,0,0,0,0,0,
+                        0,1,0,0,0,0,1,0,
+                        0,1,0,0,0,0,1,0,
+                        0,0,1,1,1,1,0,0,
+                        0,0,0,0,0,0,0,0
+                     ].map((val, i) => (
+                        <div key={i} className={`w-full h-full rounded-sm ${val ? 'bg-yellow-400' : 'bg-gray-800'}`}></div>
+                     ))}
+                </div>
+                <div className="px-6 py-2 bg-white border border-gray-200 rounded-full shadow-sm">
+                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                        🎨 O Que Vemos
+                    </span>
+                </div>
+            </div>
+
+            {/* Arrow Indicator */}
+            <div className="hidden lg:block text-gray-300">
+                <ArrowRight size={48} className="animate-pulse" />
+            </div>
+
+            {/* Visual 2: Visão da Máquina (Matriz) */}
+            <div className="flex flex-col items-center space-y-4 group">
+                <div className="relative w-64 h-64 bg-black rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-800 grid grid-cols-8 gap-0 p-1 font-mono text-[10px] sm:text-xs content-center transition-transform duration-500 hover:scale-105">
+                     {[
+                        0,0,0,0,0,0,0,0,
+                        0,0,1,0,0,1,0,0,
+                        0,0,1,0,0,1,0,0,
+                        0,0,0,0,0,0,0,0,
+                        0,1,0,0,0,0,1,0,
+                        0,1,0,0,0,0,1,0,
+                        0,0,1,1,1,1,0,0,
+                        0,0,0,0,0,0,0,0
+                     ].map((val, i) => (
+                        <div key={i} className={`flex items-center justify-center ${val ? 'text-yellow-400 font-bold' : 'text-gray-700'}`}>
+                           {val ? '255' : '0'}
+                        </div>
+                     ))}
+                </div>
+                <div className="px-6 py-2 bg-gray-900 border border-gray-700 rounded-full shadow-sm whitespace-nowrap">
+                   <span className="font-bold text-green-400 flex items-center gap-2">
+                        💾 Visão do Computador
+                   </span>
+                </div>
+            </div>
+
+         </div>
+      </Section>
+
+
+      {/* --- Section 1: Teoria (Pixels & RGB) --- */}
+      <Section title="A Teoria: Números e Cores" className="bg-slate-50">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex-1 space-y-6">
+            <p className="text-lg leading-relaxed">
+              Já sabemos que imagens são matrizes numéricas. Mas como os números viram cores?
+            </p>
+            <p className="text-lg leading-relaxed">
+               Cada <strong>Pixel</strong> não é apenas um número, mas um trio deles. O computador mistura três focos de luz com intensidades que vão de <strong>0</strong> (desligado) a <strong>255</strong> (máximo).
+            </p>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                <Layers className="text-blue-500" size={20} /> O Sistema <span className="tracking-tighter"><span className="text-red-600">R</span><span className="text-green-600">G</span><span className="text-blue-600">B</span></span>
+              </h4>
+              <p className="text-sm text-gray-600">
+                É como empilhar 3 "planilhas" de luz:
+                <br/>
+                <span className="text-red-600 font-bold">R</span>ed (Vermelho) + 
+                <span className="text-green-600 font-bold"> G</span>reen (Verde) + 
+                <span className="text-blue-600 font-bold"> B</span>lue (Azul).
+                <br/>
+                A soma de todos eles (255, 255, 255) resulta na luz Branca pura, enquanto a ausência de todos (0, 0, 0) resulta na escuridão total.
+              </p>
+            </div>
+          </div>
+          
+          {/* Visual Metaphor for RGB (Additive Mixing) */}
+          <div className="flex-1 flex flex-col items-center justify-center relative group">
+             {/* Dark "Screen" Container */}
+             <div className="relative w-64 h-64 md:w-80 md:h-80 bg-black rounded-full shadow-2xl border-4 border-gray-200 overflow-hidden flex items-center justify-center isolate">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800 via-black to-black opacity-50"></div>
+                
+                {/* Red Channel */}
+                <div className="absolute top-10 left-1/2 -translate-x-1/2 w-32 h-32 md:w-40 md:h-40 bg-[#FF0000] rounded-full mix-blend-screen">
+                   <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-red-500 font-bold text-xs tracking-widest">RED</span>
+                </div>
+                
+                {/* Green Channel */}
+                <div className="absolute bottom-10 left-10 w-32 h-32 md:w-40 md:h-40 bg-[#00FF00] rounded-full mix-blend-screen">
+                   <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-500 font-bold text-xs tracking-widest">GREEN</span>
+                </div>
+                
+                {/* Blue Channel */}
+                <div className="absolute bottom-10 right-10 w-32 h-32 md:w-40 md:h-40 bg-[#0000FF] rounded-full mix-blend-screen">
+                   <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-blue-500 font-bold text-xs tracking-widest">BLUE</span>
+                </div>
+             </div>
+             <p className="text-center text-xs text-gray-400 mt-4 max-w-xs">
+                <strong>Mistura Aditiva:</strong> O centro branco é a soma de R + G + B.
+             </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* --- Section 2: Aplicações no Dia a Dia --- */}
       <Section title="Visão Computacional no Cotidiano">
         <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
-          Você já usou visão computacional hoje, talvez sem perceber. Ela saiu dos filmes de ficção científica e agora vive no seu bolso.
+          Você já usufruiu ou presenciou a visão computacional hoje, talvez sem perceber. Ela saiu dos filmes de ficção científica e agora vive no seu bolso.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -74,7 +195,7 @@ const Home = () => {
             Seu celular desbloqueia mapeando 30.000 pontos infravermelhos no seu rosto em milissegundos. Isso é visão computacional pura.
           </InfoCard>
           <InfoCard icon={Layers} title="Redes Sociais & Filtros">
-            Aquele filtro de "orelha de cachorro" no Instagram? Ele usa <em>Face Mesh</em> para rastrear seus movimentos e ancorar objetos 3D.
+             Aquele filtro de "orelha de cachorro"? Ele usa <strong>Face Mesh</strong> para criar um modelo 3D detalhado do rosto através de landmarks (pontos de referência).
           </InfoCard>
           <InfoCard icon={Cpu} title="Carros Autônomos">
             Carros modernos "leem" placas, detectam pedestres e calculam a distância de outros veículos usando câmeras, não apenas radares.
@@ -82,45 +203,6 @@ const Home = () => {
           <InfoCard icon={ArrowRight} title="Diagnóstico Médico">
             IAs analisam Raio-X e Ressonâncias para detectar anomalias (como tumores) com precisão muitas vezes superior à humana.
           </InfoCard>
-        </div>
-      </Section>
-
-      {/* --- Section 2: Teoria (Pixels) --- */}
-      <Section title="A Mágica: Tudo são Números" className="bg-slate-50">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1 space-y-6">
-            <p className="text-lg">
-              Para nós, uma imagem é uma memória visual. Para o computador, é apenas uma <strong>Planilha Gigante</strong>.
-            </p>
-            <p className="text-lg">
-              Cada quadrado minúsculo é um <strong>Pixel</strong>. Cada pixel é apenas um número de 0 (preto) a 255 (branco).
-            </p>
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
-                <Layers className="text-blue-500" size={20} /> O Sistema RGB
-              </h4>
-              <p className="text-sm text-gray-600">
-                Imagens coloridas são na verdade 3 planilhas empilhadas:
-                <br/>
-                <span className="text-red-500 font-bold">R</span>ed (Vermelho), 
-                <span className="text-green-500 font-bold"> G</span>reen (Verde), 
-                <span className="text-blue-500 font-bold"> B</span>lue (Azul).
-                <br/>
-                Misturando esses 3 números, criamos 16 milhões de cores.
-              </p>
-            </div>
-          </div>
-          
-          {/* Visual Metaphor for Grid */}
-          <div className="flex-1 relative group">
-             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl md:rotate-3 group-hover:rotate-6 transition-transform opacity-20"></div>
-             <div className="relative bg-white p-2 rounded-2xl shadow-xl border border-gray-100 grid grid-cols-8 gap-1 w-64 h-64 mx-auto content-center justify-center">
-                {Array.from({ length: 64 }).map((_, i) => (
-                  <div key={i} className={`w-full h-full rounded-sm transition-colors duration-500 hover:bg-blue-500 ${i % 7 === 0 ? 'bg-blue-100' : 'bg-gray-100'}`} />
-                ))}
-             </div>
-             <p className="text-center text-xs text-gray-400 mt-4">Uma "matriz" visual de 8x8 pixels</p>
-          </div>
         </div>
       </Section>
 
