@@ -207,41 +207,169 @@ const Home = () => {
       </Section>
 
       {/* --- Section 3: OpenCV --- */}
-      <Section title="A Ferramenta: OpenCV">
-        <p className="text-lg mb-8">
-          Criada pela Intel em 1999, a <strong>OpenCV</strong> (Open Source Computer Vision Library) é a biblioteca padrão da indústria.
+      {/* --- Section 3: OpenCV --- */}
+      <Section title="A Base de Tudo: OpenCV">
+        <p className="text-xl text-gray-600 mb-8 text-center max-w-4xl mx-auto leading-relaxed">
+          Criada pela Intel em 1999, a <strong>OpenCV</strong> (Open Source Computer Vision Library) é o "canivete suíço" da área. 
+          Ela não apenas carrega imagens, mas nos dá <strong>superpoderes matemáticos</strong> para manipulá-las: aplicar filtros, transformar perspectivas, detectar bordas e converter espaços de cor.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="text-center p-6 bg-gray-900 text-white rounded-xl">
-                <div className="text-4xl font-black text-blue-400 mb-2">2.500+</div>
-                <div className="text-sm font-medium opacity-80">Algoritmos Otimizados</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+            <div className="flex flex-col items-center p-5 bg-slate-900 text-white rounded-xl shadow-lg hover:scale-105 transition-transform">
+                <div className="text-3xl font-black text-blue-400 mb-1">1999</div>
+                <div className="text-xs font-medium opacity-80 text-center">Lançado pela Intel</div>
             </div>
-            <div className="text-center p-6 bg-gray-900 text-white rounded-xl">
-                <div className="text-4xl font-black text-green-400 mb-2">47.000+</div>
-                <div className="text-sm font-medium opacity-80">Membros na Comunidade</div>
+            <div className="flex flex-col items-center p-5 bg-slate-900 text-white rounded-xl shadow-lg hover:scale-105 transition-transform">
+                <div className="text-3xl font-black text-green-400 mb-1">Real-Time</div>
+                <div className="text-xs font-medium opacity-80 text-center">Processamento em Tempo Real</div>
             </div>
-            <div className="text-center p-6 bg-gray-900 text-white rounded-xl">
-                <div className="text-4xl font-black text-purple-400 mb-2">C++ / Py</div>
-                <div className="text-sm font-medium opacity-80">Multi-Linguagem</div>
+            <div className="flex flex-col items-center p-5 bg-slate-900 text-white rounded-xl shadow-lg hover:scale-105 transition-transform">
+                <div className="text-3xl font-black text-purple-400 mb-1">Multi</div>
+                <div className="text-xs font-medium opacity-80 text-center">C++ & Python</div>
             </div>
         </div>
 
-        <p className="text-lg mb-4">
-          Vamos ver como o computador vê bordas com apenas 3 linhas de código:
-        </p>
+        <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-8 mb-8 max-w-4xl mx-auto">
+           <h3 className="font-bold text-gray-800 text-lg mb-4 text-center">O Que Ela Faz de Verdade?</h3>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+              <div className="flex flex-col gap-2">
+                 <div className="font-bold text-blue-700">🖼️ Processamento</div>
+                 <p className="text-gray-600">Ajuste de brilho, contraste, desfoque (blur) e conversão de cores (ex: RGB para Cinza).</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                 <div className="font-bold text-blue-700">📐 Geometria</div>
+                 <p className="text-gray-600">Redimensionar, rotacionar, cortar e corrigir distorções de perspectiva.</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                 <div className="font-bold text-blue-700">🔍 Análise</div>
+                 <p className="text-gray-600">Encontrar bordas (Canny), detectar formas, linhas e contornos em objetos.</p>
+              </div>
+           </div>
+        </div>
 
-        <CodeBlock code={`import cv2
+        <div className="text-center">
+            <p className="text-lg font-medium text-slate-700 flex items-center justify-center gap-2">
+               <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+               Vamos explorar essas funções na prática no <strong>Laboratório</strong>.
+            </p>
+        </div>
+      </Section>
 
-# 1. Carregar a câmera ou imagem
-img = cv2.imread('minha_foto.jpg')
+      {/* --- Section 4: MediaPipe --- */}
+      <Section title="A Evolução: Google MediaPipe" className="bg-blue-50">
+         <div className="flex flex-col lg:flex-row gap-12">
+            {/* Left Column: Context & Explanation */}
+            <div className="flex-1 space-y-8">
+                <p className="text-xl text-gray-700 leading-relaxed">
+                    Aqui damos um salto da "Visão Clássica" para o <strong>Deep Learning</strong>. 
+                    Antigamente, rastrear uma mão exigia supercomputadores. O Google mudou o jogo ao otimizar redes neurais complexas para rodarem levemente no navegador e no celular.
+                </p>
+                <div className="bg-white p-5 rounded-xl border border-blue-100 shadow-sm">
+                    <h4 className="font-bold text-blue-800 mb-2">🚀 A Diferença Chave</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                        O OpenCV "vê" contrastes de cores. O MediaPipe "entende" o objeto. 
+                        Ele usa uma rede neural treinada com milhões de mãos reais para <strong>predizer</strong> onde cada articulação está, mesmo com luz ruim ou movimentos rápidos.
+                    </p>
+                </div>
+            </div>
+            
+            {/* Right Column: Visuals & Models */}
+            <div className="flex-1 w-full space-y-6">
+                {/* Visual Proof (Image) */}
+                <div className="relative group w-full">
+                     <div className="absolute inset-0 bg-blue-600 rounded-2xl rotate-1 opacity-10 blur-sm"></div>
+                     <img 
+                        src="/images/hand_landmarks.png" 
+                        alt="MediaPipe Hand Landmarks" 
+                        className="relative rounded-2xl shadow-lg w-full h-auto border-2 border-white"
+                     />
+                </div>
 
-# 2. Detectar bordas (Algoritmo Canny)
-# Ele procura onde a cor muda bruscamente (ex: branco para preto)
-bordas = cv2.Canny(img, 100, 200)
+                {/* Models List (Moved from bottom to here) */}
+                <div className="grid grid-cols-1 gap-3">
+                     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:border-blue-400 transition-colors group">
+                        <div className="text-2xl group-hover:scale-110 transition-transform">🖐️</div>
+                        <div>
+                           <h3 className="font-bold text-gray-800">Hands</h3>
+                           <p className="text-sm text-gray-600 leading-tight">Rastreia 21 pontos 3D para controle gestual.</p>
+                        </div>
+                     </div>
+                     
+                     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:border-purple-400 transition-colors group">
+                        <div className="text-2xl group-hover:scale-110 transition-transform">🎭</div>
+                        <div>
+                           <h3 className="font-bold text-gray-800">Face Mesh</h3>
+                           <p className="text-sm text-gray-600 leading-tight">468 landmarks para filtros e expressões.</p>
+                        </div>
+                     </div>
+                     
+                     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:border-green-400 transition-colors group">
+                        <div className="text-2xl group-hover:scale-110 transition-transform">🏃</div>
+                        <div>
+                           <h3 className="font-bold text-gray-800">Pose</h3>
+                           <p className="text-sm text-gray-600 leading-tight">Análise de corpo inteiro para esportes.</p>
+                        </div>
+                     </div>
+                </div>
+                
+                <p className="text-xs text-gray-400 text-center">E muito mais: Iris, Holistic, Objectron...</p>
+            </div>
+         </div>
+      </Section>
 
-# 3. Mostrar o resultado
-cv2.imshow('Bordas Detectadas', bordas)`} />
+      {/* --- Section 5: Teachable Machine --- */}
+      <Section title="Sua Vez: Teachable Machine">
+         <div className="flex flex-col items-center gap-8 max-w-6xl mx-auto py-8">
+            
+            {/* 1. Intro Text */}
+            <p className="text-xl text-gray-700 text-center max-w-4xl leading-relaxed">
+               Agora que você conhece a teoria, que tal <strong>prototipar sua própria IA</strong> em minutos? 
+               O <strong>Teachable Machine</strong> permite ensinar computadores a reconhecerem <span className="text-blue-600 font-bold">Imagens, Sons e Poses</span>.
+            </p>
+
+            {/* 2. Main Image (Centered & Compact) */}
+            <div className="relative group w-full max-w-3xl">
+                 <div className="absolute inset-0 bg-purple-600 rounded-2xl rotate-1 opacity-10 blur-sm transform scale-105"></div>
+                 <img 
+                     src="/images/teacheblemachine.PNG" 
+                     alt="Interface do Teachable Machine" 
+                     className="relative rounded-2xl shadow-xl w-full h-auto border-2 border-white"
+                 />
+            </div>
+
+            {/* 3. Horizontal Steps (Detailed) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+               <div className="flex flex-col items-center text-center p-5 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-blue-300 transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl mb-3">1</div>
+                  <h4 className="font-bold text-gray-800 text-lg mb-2">Coletar</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">Capture imagens (Webcam) ou grave áudios (Microfone) para criar suas categorias.</p>
+               </div>
+               
+               <div className="flex flex-col items-center text-center p-5 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-purple-300 transition-colors">
+                   <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xl mb-3">2</div>
+                   <h4 className="font-bold text-gray-800 text-lg mb-2">Treinar</h4>
+                   <p className="text-sm text-gray-600 leading-relaxed">Defina hiperparâmetros como épocas e learning rate, e treine o modelo instantaneamente.</p>
+               </div>
+               
+               <div className="flex flex-col items-center text-center p-5 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-green-300 transition-colors">
+                   <div className="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold text-xl mb-3">3</div>
+                   <h4 className="font-bold text-gray-800 text-lg mb-2">Exportar</h4>
+                   <p className="text-sm text-gray-600 leading-relaxed">Exporte seu modelo treinado para usar em sites, aplicativos ou projetos de robótica.</p>
+               </div>
+            </div>
+            
+            {/* 4. CTA (Prominent) */}
+            <div>
+               <a 
+                  href="https://teachablemachine.withgoogle.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-10 py-4 bg-blue-600 text-white rounded-full font-bold text-xl hover:bg-blue-700 transition-all hover:shadow-xl hover:-translate-y-1"
+               >
+                  <Cpu size={24} /> Criar Meu Primeiro Modelo
+               </a>
+            </div>
+         </div>
       </Section>
 
       {/* --- Section 4: CTA --- */}
