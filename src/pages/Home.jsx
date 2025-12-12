@@ -385,15 +385,15 @@ const Home = () => {
       </Section>
 
       {/* --- Section 6: Phase 1 - Hand Tracking --- */}
-      <Section title="Saindo da Teoria: O Projeto">
+      <Section title="Saindo da teoria: Handtracking">
           <div className="flex flex-col lg:flex-row items-center gap-12">
               {/* Left: Code Logic */}
               <div className="flex-1 w-full">
                   <p className="text-gray-700 mb-4 font-medium text-lg leading-relaxed">
-                      "Esse é o tipo de projeto que eu sempre quis construir."
+                      Esse é o tipo de projeto que eu sempre quis construir.
                   </p>
                   <p className="text-gray-600 mb-4 text-base leading-relaxed">
-                      Entrei na área de Dados impressionado por carros autônomos, tentando entender como as máquinas "enxergavam". Mas o caminho não foi linear: comecei focado em <strong>Pandas, Numpy e Análise de Dados</strong>.
+                      Entrei na área de Dados impressionado por carros autônomos, tentando entender como as máquinas "enxergavam". Mas o caminho não foi linear: comecei focado em <strong>Pandas, Numpy e Modelos de Predição</strong>.
                   </p>
                   <p className="text-gray-600 mb-6 text-base leading-relaxed">
                       Depois de mais de 1 ano, percebi que ainda não tinha me aventurado no que me trouxe para essa carreira. <strong>Mudei isso agora.</strong>
@@ -401,22 +401,10 @@ const Home = () => {
                   <p className="text-blue-800 bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500 mb-6 text-sm">
                       O primeiro passo foi usar a biblioteca <strong>MediaPipe</strong> para detectar os 21 landmarks (pontos-chave) que você viu na <strong>sessão acima</strong>.
                   </p>
-                  
-                <TerminalWindow title="detector.py">
-                      <div><span className="text-purple-400">import</span> mediapipe <span className="text-purple-400">as</span> mp</div>
-                      <div className="text-gray-500"># ... inicialização ...</div>
-                      <div>results = hands.process(img_rgb)</div>
-                      <div><span className="text-purple-400">if</span> results.multi_hand_landmarks:</div>
-                      <div className="pl-4 text-gray-500"># Desenhar os 21 pontos</div>
-                      <div className="pl-4">mp_draw.draw_landmarks(</div>
-                      <div className="pl-8">img,</div>
-                      <div className="pl-8">hands.HAND_CONNECTIONS</div>
-                      <div className="pl-4">)</div>
-                </TerminalWindow>
               </div>
 
-              {/* Right: Visualization */}
-              <div className="flex-1 w-full flex justify-center">
+              {/* Right: Visualization & Code */}
+              <div className="flex-1 w-full flex flex-col items-center gap-6">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-blue-500 w-full max-w-lg group">
                        {/* Scanner Overlay Effect */}
                        <div className="absolute top-0 left-0 w-full h-1 bg-blue-400 shadow-[0_0_20px_rgb(59,130,246)] opacity-75 animate-pulse"></div>
@@ -435,13 +423,28 @@ const Home = () => {
                            <span className="text-xs font-mono text-green-400 font-bold">LIVE SYSTEM</span>
                        </div>
                   </div>
+
+                  {/* Code Under Image */}
+                  <div className="w-full max-w-lg">
+                    <TerminalWindow title="detector.py">
+                          <div><span className="text-purple-400">import</span> mediapipe <span className="text-purple-400">as</span> mp</div>
+                          <div className="text-gray-500"># ... inicialização ...</div>
+                          <div>results = hands.process(img_rgb)</div>
+                          <div><span className="text-purple-400">if</span> results.multi_hand_landmarks:</div>
+                          <div className="pl-4 text-gray-500"># Desenhar os 21 landmarks</div>
+                          <div className="pl-4">mp_draw.draw_landmarks(</div>
+                          <div className="pl-8">img,</div>
+                          <div className="pl-8">hands.HAND_CONNECTIONS</div>
+                          <div className="pl-4">)</div>
+                    </TerminalWindow>
+                  </div>
               </div>
           </div>
       </Section>
 
       {/* --- Section 7.1: Phase 2 - Step 1 (Normal) --- */}
       {/* --- Section 7.1: Phase 2 - Step 1 (Normal) --- */}
-      <Section title="Fase 2.1: A Matemática dos Vetores">
+      <Section title="Fase 0: Detectar a Mão">
           <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
               {/* Left: Image */}
               <div className="flex-1 w-full flex justify-center">
@@ -454,7 +457,7 @@ const Home = () => {
               {/* Right: Technical Explanation */}
               <div className="flex-1 space-y-6 min-w-0">
                   <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm">1</div>
+                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm">0</div>
                       Normalização e Rastreamento
                   </h3>
                   <p className="text-gray-700 text-lg leading-relaxed">
@@ -463,7 +466,7 @@ const Home = () => {
                   <TerminalWindow title="math_utils.py">
                        <div><span className="text-purple-400">def</span> <span className="text-blue-400">find_hands</span>(img):</div>
                        <div className="pl-4">results = hands.process(img_rgb)</div>
-                       <div className="pl-4 text-gray-500"># Retorna lista de Landmarks (pontos)</div>
+                       <div className="pl-4 text-gray-500"># Retorna lista de Landmarks</div>
                        <div className="pl-4">lm_list.append([id, cx, cy])</div>
                   </TerminalWindow>
                   <p className="text-sm text-gray-500 italic border-l-4 border-blue-200 pl-4 py-1">
@@ -474,20 +477,39 @@ const Home = () => {
       </Section>
 
       {/* --- Section 7.2: Phase 2 - Step 2 (Armed) --- */}
-      <Section title="Fase 2.2: Lógica & Geometria">
+      <Section title="Fase 1: Validar a Intenção">
           <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
                {/* Left: Image */}
-              <div className="flex-1 w-full flex justify-center">
+              {/* Left: Image & Observations */}
+              <div className="flex-1 w-full flex flex-col items-center gap-6">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-orange-500 w-full max-w-lg group hover:scale-[1.02] transition-transform">
                        <img src="/images/armado.jpg" alt="Estado Armado - Geometria" className="w-full h-auto" />
                        <div className="absolute bottom-4 left-4 bg-orange-600 text-white text-xs px-3 py-1 rounded shadow-lg font-mono animate-pulse">ESTADO: 1 (ARMADO)</div>
+                  </div>
+
+                  {/* Observations */}
+                  <div className="bg-orange-50 border border-orange-200 p-5 rounded-xl text-sm text-gray-700 w-full max-w-lg shadow-sm">
+                      <h4 className="font-bold text-orange-800 mb-2 flex items-center gap-2">
+                        🛡️ Validação de Segurança
+                      </h4>
+                      <ul className="space-y-2 list-disc list-inside marker:text-orange-500">
+                        <li>
+                          <strong>Geometria do Dedão:</strong> Diferente dos outros dedos, o polegar exige cálculo de ângulo/hipotenusa, não apenas altura.
+                        </li>
+                        <li>
+                          <strong>Anti-Falso Positivo:</strong> Adicionei uma regra de "Dedos Juntos". Se a mão estiver aberta (dando tchau), o sistema <strong>não arma</strong>. É preciso intenção clara.
+                        </li>
+                        <li>
+                          <strong>Janela de 2s:</strong> É o tempo limite para fechar a mão após "Armar". Se demorar mais que isso, o sistema entende como desistência e reseta.
+                        </li>
+                      </ul>
                   </div>
               </div>
 
               {/* Right: Technical Explanation */}
               <div className="flex-1 space-y-6 min-w-0">
                   <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-sm">2</div>
+                      <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-sm">1</div>
                       Cálculo de Hipotenusa
                   </h3>
                   <p className="text-gray-700 text-lg leading-relaxed">
@@ -501,49 +523,69 @@ const Home = () => {
                        <div className="pl-4"><span className="text-blue-400">print</span>(<span className="text-green-400">"Sinal Possível"</span>)</div>
                     </TerminalWindow>
                   <p className="text-gray-600 leading-relaxed">
-                      Se essa condição for verdadeira E os 4 dedos estiverem para cima, o sistema desenha a <span className="text-orange-600 font-bold">caixa laranja</span> e entra em estado de alerta preliminar.
+                      Se essa condição for verdadeira, os 4 dedos estiverem para cima e estiverem colados, o sistema desenha a <span className="text-orange-600 font-bold">caixa laranja</span> e entra em estado de alerta preliminar.
                   </p>
               </div>
           </div>
       </Section>
 
       {/* --- Section 7.3: Phase 2 - Step 3 (Alert) --- */}
-      <Section title="Fase 2.3: Integração Universal (Webhooks)">
-          <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
-               {/* Left: Image */}
-              <div className="flex-1 w-full flex justify-center">
+      <Section title="Fase 2: Alerta com Integração Universal (Webhook)">
+          <div className="flex flex-col lg:flex-row items-start gap-12 h-full">
+               {/* Left: Image & Trigger Logic */}
+              <div className="flex-1 w-full flex flex-col items-center gap-6">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-red-600 w-full max-w-lg group hover:scale-[1.02] transition-transform">
                        <img src="/images/alerta.jpg" alt="Estado Alerta - Disparo" className="w-full h-auto" />
                        <div className="absolute inset-0 bg-red-500 opacity-10 animate-pulse"></div>
                        <div className="absolute bottom-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded shadow-lg font-mono">ESTADO: 2 (DISPARO)</div>
                   </div>
+
+                  {/* Trigger Explanation */}
+                  <div className="bg-red-50 border border-red-200 p-5 rounded-xl text-sm text-gray-700 w-full max-w-lg shadow-sm">
+                      <h4 className="font-bold text-red-800 mb-2 flex items-center gap-2">
+                        🚨 A Lógica do Disparo
+                      </h4>
+                      <ul className="space-y-2 list-disc list-inside marker:text-red-500">
+                        <li>
+                          <strong>Matriz OpenCV:</strong> Na visão computacional, a tela é uma matriz onde o <strong>Y aumenta para baixo</strong>. O topo é 0.
+                        </li>
+                        <li>
+                          <strong>Geometria (Ponta &gt; Base):</strong> Por isso, quando a ponta do dedo tem um Y maior que a articulação, significa que ela está fisicamente <strong>mais baixa</strong> (dobrada).
+                        </li>
+                      </ul>
+                  </div>
               </div>
 
-              {/* Right: Technical Explanation */}
-              <div className="flex-1 space-y-6 min-w-0">
+              {/* Right: Technical Explanation - Text Only */}
+              <div className="flex-1 space-y-6 min-w-0 pt-4">
                   <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-sm">3</div>
+                      <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-sm">2</div>
                       O Céu é o Limite
                   </h3>
                   <p className="text-gray-700 text-lg leading-relaxed text-justify">
-                      Ao detectar o validador temporal (2s), enviamos um objeto JSON para o <strong>N8N</strong> (Automação).
+                      Ao detectar o disparo (alerta), enviamos um objeto JSON para o <strong>Webhook</strong>, que no meu caso, está dentro do N8N.
                   </p>
                   <p className="text-gray-700 text-lg leading-relaxed text-justify">
-                      Com o dado no Webhook, podemos conectá-lo a <strong>qualquer lugar</strong>: WhatsApp, SMS, Dashboard da Polícia ou Slack.
-                  </p>
-                    <TerminalWindow title="webhook_service.py">
-                       <div><span className="text-purple-400">import</span> threading</div>
-                       <div><span className="text-purple-400">import</span> requests</div>
-                       <div className="mt-2 text-gray-500"># Envio Assíncrono</div>
-                       <div>threading.Thread(</div>
-                       <div className="pl-4">target=webhook_socorro,</div>
-                       <div className="pl-4">args=(alert_data,)</div>
-                       <div>).start()</div>
-                    </TerminalWindow>
-                  <p className="text-sm text-gray-500 italic border-l-4 border-red-200 pl-4 py-1 text-justify">
-                      Curiosidade técnica: O envio é feito via <strong>Threading</strong> para não travar o processamento de imagem (FPS).
+                      Com os dados no Webhook, podemos integrá-lo em <strong>qualquer software</strong>: WhatsApp, SMS, Dashboard da Polícia, Emergência, etc.
                   </p>
               </div>
+          </div>
+
+          {/* Bottom: Logic Code (Full Width) */}
+          <div className="w-full max-w-5xl mx-auto mt-12">
+               <TerminalWindow title="logic.py">
+                   <div className="text-gray-500"># 1. Análise Geométrica (O que o computador vê):</div>
+                   <div className="text-gray-500"># Ele verifica dedo por dedo: Ponta vs Articulação</div>
+                   <div>fingers = detector.fingers_up()</div>
+                   <div className="text-gray-500"># Exemplo de retorno: [0, 1, 1, 0, 0] (Dedos indicador e médio abertos)</div>
+                   <br/>
+                   <div className="text-gray-500"># 2. Regra de Decisão (O que o computador conclui):</div>
+                   <div className="text-gray-500"># Se a lista for EXATAMENTE "tudo zero", ele confirma o gesto.</div>
+                   <div>punho_fechado = (fingers == [<span className="text-orange-400">0</span>, <span className="text-orange-400">0</span>, <span className="text-orange-400">0</span>, <span className="text-orange-400">0</span>, <span className="text-orange-400">0</span>])</div>
+               </TerminalWindow>
+               <p className="text-sm text-gray-500 italic border-l-4 border-red-200 pl-4 py-1 text-justify">
+                   Curiosidade técnica: O envio é feito via <strong>Threading</strong> para não travar o processamento de imagem (FPS).
+               </p>
           </div>
       </Section>
 
