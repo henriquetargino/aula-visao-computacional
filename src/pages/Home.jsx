@@ -14,9 +14,20 @@ const Section = ({ title, children, className = "" }) => (
   </section>
 );
 
-const CodeBlock = ({ code }) => (
-  <div className="bg-gray-900 text-gray-100 p-6 rounded-xl font-mono text-sm overflow-x-auto my-6 shadow-lg">
-    <pre>{code}</pre>
+const TerminalWindow = ({ children, title = "terminal.py" }) => (
+  <div className="bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden my-6 border border-gray-800 font-mono text-sm leading-relaxed text-gray-300 transform transition-transform hover:scale-[1.01]">
+    <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between border-b border-black/50">
+      <div className="flex gap-2">
+        <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+        <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+        <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+      </div>
+      <div className="text-xs text-gray-500 font-sans font-medium">{title}</div>
+      <div className="w-12" />
+    </div>
+    <div className="p-6 overflow-x-auto">
+        <pre>{children}</pre>
+    </div>
   </div>
 );
 
@@ -104,6 +115,7 @@ const Home = () => {
             {/* Visual 2: Visão da Máquina (Matriz) */}
             <div className="flex flex-col items-center space-y-4 group">
                 <div className="relative w-64 h-64 bg-black rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-800 grid grid-cols-8 gap-0 p-1 font-mono text-[10px] sm:text-xs content-center transition-transform duration-500 hover:scale-105">
+                     {/* 8x8 Data */}
                      {[
                         0,0,0,0,0,0,0,0,
                         0,0,1,0,0,1,0,0,
@@ -198,7 +210,7 @@ const Home = () => {
              Aquele filtro de "orelha de cachorro"? Ele usa <strong>Face Mesh</strong> para criar um modelo 3D detalhado do rosto através de landmarks (pontos de referência).
           </InfoCard>
           <InfoCard icon={Cpu} title="Carros Autônomos">
-            Carros modernos "leem" placas, detectam pedestres e calculam a distância de outros veículos usando câmeras, não apenas radares.
+            Carros modernos "leem" placas, detectam pedestres e calculam a distância de outros veículos usando câmeras, não apenas sensores.
           </InfoCard>
           <InfoCard icon={ArrowRight} title="Diagnóstico Médico">
             IAs analisam Raio-X e Ressonâncias para detectar anomalias (como tumores) com precisão muitas vezes superior à humana.
@@ -268,7 +280,7 @@ const Home = () => {
                     <h4 className="font-bold text-blue-800 mb-2">🚀 A Diferença Chave</h4>
                     <p className="text-gray-600 text-sm leading-relaxed">
                         O OpenCV "vê" contrastes de cores. O MediaPipe "entende" o objeto. 
-                        Ele usa uma rede neural treinada com milhões de mãos reais para <strong>predizer</strong> onde cada articulação está, mesmo com luz ruim ou movimentos rápidos.
+                        Ele usa uma rede neural treinada com milhões de mãos reais para <strong>predizer</strong> onde cada articulação está, mesmo sem ter todos os pontos visíveis.
                     </p>
                 </div>
             </div>
@@ -370,6 +382,169 @@ const Home = () => {
                </a>
             </div>
          </div>
+      </Section>
+
+      {/* --- Section 6: Phase 1 - Hand Tracking --- */}
+      <Section title="Saindo da Teoria: O Projeto">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+              {/* Left: Code Logic */}
+              <div className="flex-1 w-full">
+                  <p className="text-gray-700 mb-4 font-medium text-lg leading-relaxed">
+                      "Esse é o tipo de projeto que eu sempre quis construir."
+                  </p>
+                  <p className="text-gray-600 mb-4 text-base leading-relaxed">
+                      Entrei na área de Dados impressionado por carros autônomos, tentando entender como as máquinas "enxergavam". Mas o caminho não foi linear: comecei focado em <strong>Pandas, Numpy e Análise de Dados</strong>.
+                  </p>
+                  <p className="text-gray-600 mb-6 text-base leading-relaxed">
+                      Depois de mais de 1 ano, percebi que ainda não tinha me aventurado no que me trouxe para essa carreira. <strong>Mudei isso agora.</strong>
+                  </p>
+                  <p className="text-blue-800 bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500 mb-6 text-sm">
+                      O primeiro passo foi usar a biblioteca <strong>MediaPipe</strong> para detectar os 21 landmarks (pontos-chave) que você viu na <strong>sessão acima</strong>.
+                  </p>
+                  
+                <TerminalWindow title="detector.py">
+                      <div><span className="text-purple-400">import</span> mediapipe <span className="text-purple-400">as</span> mp</div>
+                      <div className="text-gray-500"># ... inicialização ...</div>
+                      <div>results = hands.process(img_rgb)</div>
+                      <div><span className="text-purple-400">if</span> results.multi_hand_landmarks:</div>
+                      <div className="pl-4 text-gray-500"># Desenhar os 21 pontos</div>
+                      <div className="pl-4">mp_draw.draw_landmarks(</div>
+                      <div className="pl-8">img,</div>
+                      <div className="pl-8">hands.HAND_CONNECTIONS</div>
+                      <div className="pl-4">)</div>
+                </TerminalWindow>
+              </div>
+
+              {/* Right: Visualization */}
+              <div className="flex-1 w-full flex justify-center">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-blue-500 w-full max-w-lg group">
+                       {/* Scanner Overlay Effect */}
+                       <div className="absolute top-0 left-0 w-full h-1 bg-blue-400 shadow-[0_0_20px_rgb(59,130,246)] opacity-75 animate-pulse"></div>
+                       <div className="absolute inset-x-0 top-1/2 h-px bg-blue-500 opacity-20"></div>
+                       <div className="absolute inset-y-0 left-1/2 w-px bg-blue-500 opacity-20"></div>
+                       
+                       <img 
+                           src="/images/hand_tracking.jpg" 
+                           alt="Rastreamento de Mão MediaPipe" 
+                           className="w-full h-auto"
+                       />
+                       
+                       {/* HUD Overlay - Cleaned */}
+                       <div className="absolute top-4 right-4 flex gap-2">
+                           <div className="w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                           <span className="text-xs font-mono text-green-400 font-bold">LIVE SYSTEM</span>
+                       </div>
+                  </div>
+              </div>
+          </div>
+      </Section>
+
+      {/* --- Section 7.1: Phase 2 - Step 1 (Normal) --- */}
+      {/* --- Section 7.1: Phase 2 - Step 1 (Normal) --- */}
+      <Section title="Fase 2.1: A Matemática dos Vetores">
+          <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
+              {/* Left: Image */}
+              <div className="flex-1 w-full flex justify-center">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-blue-500 w-full max-w-lg group hover:scale-[1.02] transition-transform">
+                       <img src="/images/normal.jpg" alt="Estado Normal - Landmarks" className="w-full h-auto" />
+                       <div className="absolute bottom-4 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded shadow-lg font-mono">ESTADO: 0 (NORMAL)</div>
+                  </div>
+              </div>
+
+              {/* Right: Technical Explanation */}
+              <div className="flex-1 space-y-6 min-w-0">
+                  <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm">1</div>
+                      Normalização e Rastreamento
+                  </h3>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                      Tudo começa com a extração bruta. O código varre os pixels e retorna uma lista de <strong>21 coordenadas (X, Y)</strong>.
+                  </p>
+                  <TerminalWindow title="math_utils.py">
+                       <div><span className="text-purple-400">def</span> <span className="text-blue-400">find_hands</span>(img):</div>
+                       <div className="pl-4">results = hands.process(img_rgb)</div>
+                       <div className="pl-4 text-gray-500"># Retorna lista de Landmarks (pontos)</div>
+                       <div className="pl-4">lm_list.append([id, cx, cy])</div>
+                  </TerminalWindow>
+                  <p className="text-sm text-gray-500 italic border-l-4 border-blue-200 pl-4 py-1">
+                      Nesta etapa, o sistema é "frio". Ele vê a mão, mas não julga a intenção.
+                  </p>
+              </div>
+          </div>
+      </Section>
+
+      {/* --- Section 7.2: Phase 2 - Step 2 (Armed) --- */}
+      <Section title="Fase 2.2: Lógica & Geometria">
+          <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
+               {/* Left: Image */}
+              <div className="flex-1 w-full flex justify-center">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-orange-500 w-full max-w-lg group hover:scale-[1.02] transition-transform">
+                       <img src="/images/armado.jpg" alt="Estado Armado - Geometria" className="w-full h-auto" />
+                       <div className="absolute bottom-4 left-4 bg-orange-600 text-white text-xs px-3 py-1 rounded shadow-lg font-mono animate-pulse">ESTADO: 1 (ARMADO)</div>
+                  </div>
+              </div>
+
+              {/* Right: Technical Explanation */}
+              <div className="flex-1 space-y-6 min-w-0">
+                  <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-sm">2</div>
+                      Cálculo de Hipotenusa
+                  </h3>
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                      Como saber se o dedão está dobrado? Usamos <strong>Álgebra Linear</strong>. Calculamos a distância euclidiana entre a ponta do dedão e a base do mindinho.
+                  </p>
+                    <TerminalWindow title="geometry.py">
+                       <div className="text-gray-500"># A Regra de Ouro</div>
+                       <div><span className="text-purple-400">if</span> dedao_dobrado &lt; (</div>
+                       <div className="pl-4">largura_palma * <span className="text-orange-400">0.9</span></div>
+                       <div>):</div>
+                       <div className="pl-4"><span className="text-blue-400">print</span>(<span className="text-green-400">"Sinal Possível"</span>)</div>
+                    </TerminalWindow>
+                  <p className="text-gray-600 leading-relaxed">
+                      Se essa condição for verdadeira E os 4 dedos estiverem para cima, o sistema desenha a <span className="text-orange-600 font-bold">caixa laranja</span> e entra em estado de alerta preliminar.
+                  </p>
+              </div>
+          </div>
+      </Section>
+
+      {/* --- Section 7.3: Phase 2 - Step 3 (Alert) --- */}
+      <Section title="Fase 2.3: Integração Universal (Webhooks)">
+          <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
+               {/* Left: Image */}
+              <div className="flex-1 w-full flex justify-center">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-red-600 w-full max-w-lg group hover:scale-[1.02] transition-transform">
+                       <img src="/images/alerta.jpg" alt="Estado Alerta - Disparo" className="w-full h-auto" />
+                       <div className="absolute inset-0 bg-red-500 opacity-10 animate-pulse"></div>
+                       <div className="absolute bottom-4 left-4 bg-red-600 text-white text-xs px-3 py-1 rounded shadow-lg font-mono">ESTADO: 2 (DISPARO)</div>
+                  </div>
+              </div>
+
+              {/* Right: Technical Explanation */}
+              <div className="flex-1 space-y-6 min-w-0">
+                  <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-sm">3</div>
+                      O Céu é o Limite
+                  </h3>
+                  <p className="text-gray-700 text-lg leading-relaxed text-justify">
+                      Ao detectar o validador temporal (2s), enviamos um objeto JSON para o <strong>N8N</strong> (Automação).
+                  </p>
+                  <p className="text-gray-700 text-lg leading-relaxed text-justify">
+                      Com o dado no Webhook, podemos conectá-lo a <strong>qualquer lugar</strong>: WhatsApp, SMS, Dashboard da Polícia ou Slack.
+                  </p>
+                    <TerminalWindow title="webhook_service.py">
+                       <div><span className="text-purple-400">import</span> threading</div>
+                       <div><span className="text-purple-400">import</span> requests</div>
+                       <div className="mt-2 text-gray-500"># Envio Assíncrono</div>
+                       <div>threading.Thread(</div>
+                       <div className="pl-4">target=webhook_socorro,</div>
+                       <div className="pl-4">args=(alert_data,)</div>
+                       <div>).start()</div>
+                    </TerminalWindow>
+                  <p className="text-sm text-gray-500 italic border-l-4 border-red-200 pl-4 py-1 text-justify">
+                      Curiosidade técnica: O envio é feito via <strong>Threading</strong> para não travar o processamento de imagem (FPS).
+                  </p>
+              </div>
+          </div>
       </Section>
 
       {/* --- Section 4: CTA --- */}
