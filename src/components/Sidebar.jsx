@@ -64,7 +64,7 @@ const Sidebar = () => {
 
       <nav className="flex-1 p-6 space-y-2">
         <NavItem to="/" icon={LayoutDashboard} label="Apresentação" />
-        <NavItem to="/lab" icon={FlaskConical} label="Laboratório OpenCV" />
+        <NavItem to="/lab" icon={FlaskConical} label="Laboratório" />
       </nav>
 
       <div className="p-6 border-t border-gray-100/50">
