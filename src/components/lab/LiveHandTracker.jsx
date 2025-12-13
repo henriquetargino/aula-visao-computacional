@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Webcam from 'react-webcam';
-import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
-import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
+// Imports removidos para usar versão Global (CDN) e evitar defeitos do Vite/Vercel
+// import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
+// import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import { AlertTriangle, CheckCircle, Hand } from 'lucide-react';
 
 const LiveHandTracker = () => {
@@ -49,8 +50,9 @@ const LiveHandTracker = () => {
                 const handedness = results.multiHandedness && results.multiHandedness[i] ? results.multiHandedness[i].label : "Right";
                 
                 // Draw skeleton
-                drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
-                drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1, radius: 2 });
+                // Draw skeleton
+                window.drawConnectors(canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
+                window.drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1, radius: 2 });
 
                 // --- LOGIC PER HAND ---
                 const getCoord = (idx) => ({ x: landmarks[idx].x * videoWidth, y: landmarks[idx].y * videoHeight });
@@ -198,9 +200,15 @@ const LiveHandTracker = () => {
         let animationFrameId = null;
 
         if (cameraActive && isCameraReady) {
-            hands = new Hands({
+            // USANDO window.Hands (Versão Global do Script Tag)
+            if (!window.Hands) {
+                 console.error("MediaPipe Hands not loaded yet.");
+                 return;
+            }
+
+            hands = new window.Hands({
                 locateFile: (file) => {
-                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`;
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
                 }
             });
 
