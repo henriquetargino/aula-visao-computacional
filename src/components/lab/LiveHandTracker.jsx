@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Webcam from 'react-webcam';
 import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-import { Camera } from '@mediapipe/camera_utils';
 import { AlertTriangle, CheckCircle, Hand } from 'lucide-react';
 
 const LiveHandTracker = () => {
@@ -194,11 +193,13 @@ const LiveHandTracker = () => {
     }, []);
 
     useEffect(() => {
-        let camera = null;
-        if (webcamRef.current && webcamRef.current.video) {
-            const hands = new Hands({
+        let hands = null;
+        let animationFrameId = null;
+
+        if (cameraActive) {
+            hands = new Hands({
                 locateFile: (file) => {
-                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`;
                 }
             });
 
@@ -211,21 +212,27 @@ const LiveHandTracker = () => {
 
             hands.onResults(onResults);
 
-            if (cameraActive) {
-                camera = new Camera(webcamRef.current.video, {
-                    onFrame: async () => {
-                        if (webcamRef.current && webcamRef.current.video) {
-                            await hands.send({ image: webcamRef.current.video });
-                        }
-                    },
-                    width: 1280,
-                    height: 720
-                });
-                camera.start();
-            }
+            const processVideo = async () => {
+                if (
+                    webcamRef.current && 
+                    webcamRef.current.video && 
+                    webcamRef.current.video.readyState === 4
+                ) {
+                    try {
+                        await hands.send({ image: webcamRef.current.video });
+                    } catch (error) {
+                        console.error("MediaPipe Error:", error);
+                    }
+                }
+                animationFrameId = requestAnimationFrame(processVideo);
+            };
+
+            processVideo();
         }
+
         return () => {
-             // Cleanup if needed
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            if (hands) hands.close();
         };
     }, [cameraActive, onResults]);
 
