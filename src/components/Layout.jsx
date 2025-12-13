@@ -37,7 +37,7 @@ const Layout = () => {
          {!isSidebarOpen && (
              <button 
                 onClick={() => setIsSidebarOpen(true)}
-                className="fixed left-6 top-6 z-50 p-2 bg-white/80 backdrop-blur-sm hover:bg-white text-slate-600 hover:text-blue-600 rounded-lg shadow-sm border border-gray-200 transition-all hover:shadow-md group"
+                className="fixed left-6 top-3 z-50 p-2 bg-white/80 backdrop-blur-sm hover:bg-white text-slate-600 hover:text-blue-600 rounded-lg shadow-sm border border-gray-200 transition-all hover:shadow-md group"
                 title="Expandir Menu"
              >
                 {/* Custom Stacking Hamburger */}
