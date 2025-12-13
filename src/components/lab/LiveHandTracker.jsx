@@ -8,6 +8,7 @@ const LiveHandTracker = () => {
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
     const [cameraActive, setCameraActive] = useState(false);
+    const [isCameraReady, setIsCameraReady] = useState(false);
     const [status, setStatus] = useState("NORMAL"); // NORMAL, ARMED, TRIGGERED
     const [debugText, setDebugText] = useState("Aguardando gesto...");
 
@@ -196,10 +197,10 @@ const LiveHandTracker = () => {
         let hands = null;
         let animationFrameId = null;
 
-        if (cameraActive) {
+        if (cameraActive && isCameraReady) {
             hands = new Hands({
                 locateFile: (file) => {
-                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`;
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
                 }
             });
 
@@ -234,7 +235,7 @@ const LiveHandTracker = () => {
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
             if (hands) hands.close();
         };
-    }, [cameraActive, onResults]);
+    }, [cameraActive, isCameraReady, onResults]);
 
     return (
         <div className="flex flex-col items-center w-full max-w-4xl mx-auto p-4">
@@ -281,6 +282,8 @@ const LiveHandTracker = () => {
                             ref={webcamRef}
                             className="absolute inset-0 w-full h-full object-cover"
                             mirrored={true}
+                            onUserMedia={() => setIsCameraReady(true)}
+                            onUserMediaError={(err) => console.error("Webcam Error:", err)}
                         />
                         <canvas
                             ref={canvasRef}
