@@ -3,7 +3,7 @@ import Webcam from 'react-webcam';
 // Imports removidos para usar versão Global (CDN) e evitar defeitos do Vite/Vercel
 // import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
 // import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-import { AlertTriangle, CheckCircle, Hand } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Hand, Activity } from 'lucide-react';
 
 const LiveHandTracker = () => {
     const webcamRef = useRef(null);
@@ -12,12 +12,22 @@ const LiveHandTracker = () => {
     const [isCameraReady, setIsCameraReady] = useState(false);
     const [status, setStatus] = useState("NORMAL"); // NORMAL, ARMED, TRIGGERED
     const [debugText, setDebugText] = useState("Aguardando gesto...");
-
-    // Ref to store state without re-renders affecting logic loop
+    
+    // Debug Overlay State
+    const [debugInfo, setDebugInfo] = useState({
+        thumbRatio: 0,
+        isThumbFolded: false,
+        fingers: [0, 0, 0, 0, 0],
+        areFingersTogether: false
+    });
+    
+    // Refs to store state without re-renders affecting logic loop
     const stateRef = useRef({
         status: "NORMAL",
         armStartTime: 0,
-        lastSuccessTime: 0
+        lastSuccessTime: 0,
+        lastArmedTime: 0,
+        lastDebugTime: 0 // Throttling for UI updates
     });
 
     // Constants
@@ -43,13 +53,20 @@ const LiveHandTracker = () => {
         // Variables for this frame
         let signalDetectedInFrame = false;
         let now = Date.now();
+        
+        // Debug Data Container
+        let currentDebugData = {
+           thumbRatio: 0,
+           isThumbFolded: false,
+           fingers: [0, 0, 0, 0, 0],
+           areFingersTogether: false
+        };
 
         if (results.multiHandLandmarks) {
             for (let i = 0; i < results.multiHandLandmarks.length; i++) {
                 const landmarks = results.multiHandLandmarks[i];
                 const handedness = results.multiHandedness && results.multiHandedness[i] ? results.multiHandedness[i].label : "Right";
                 
-                // Draw skeleton
                 // Draw skeleton
                 window.drawConnectors(canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 2 });
                 window.drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 1, radius: 2 });
@@ -63,12 +80,6 @@ const LiveHandTracker = () => {
                 const tipIds = [4, 8, 12, 16, 20];
 
                 // Thumb Logic (Handedness Aware)
-                // Right Hand: Thumb on Left (Tip X < Joint X = Open)
-                // Left Hand: Thumb on Right (Tip X > Joint X = Open)
-                // Note: Webcam is Mirrored visually, but Coordinates are normalized [0..1] from Left to Right of the IMAGE BUFFER.
-                // If Mirrored: User Right Hand appears on Screen Right. 
-                // MediaPipe Label "Right" = User's Right Hand.
-                
                 let thumbOpen = false;
                 if (handedness === "Right") {
                      thumbOpen = landmarks[4].x < landmarks[3].x;
@@ -85,6 +96,9 @@ const LiveHandTracker = () => {
                         fingers.push(0);
                     }
                 }
+                
+                // Store fingers for debug
+                currentDebugData.fingers = fingers;
 
                 // 2. Distances
                 const p_indicador = getCoord(8);
@@ -93,14 +107,22 @@ const LiveHandTracker = () => {
                 const p_base_mind = getCoord(17);
                 const p_base_ind = getCoord(5);
 
-                const largura_palma = calcDist(p_base_ind, p_base_mind);
+                const largura_palma = calcDist(p_base_ind, p_base_mind) || 1; // Avoid div by zero
                 const dist_dedos = calcDist(p_indicador, p_medio);
                 const dist_dedao_mindinho = calcDist(p_dedao, p_base_mind);
 
                 // 3. Conditions
                 const quatro_dedos_up = (fingers[1] === 1 && fingers[2] === 1 && fingers[3] === 1 && fingers[4] === 1);
-                const dedos_juntos = dist_dedos < (largura_palma * 0.45); // Slightly relaxed to 0.45
-                const dedao_dobrado = dist_dedao_mindinho < (largura_palma * 0.9);
+                const dedos_juntos = dist_dedos < (largura_palma * 0.45); 
+                currentDebugData.areFingersTogether = dedos_juntos;
+                
+                // Calculate Ratio for Debug
+                const ratio = dist_dedao_mindinho / largura_palma;
+                currentDebugData.thumbRatio = ratio;
+                
+                const dedao_dobrado = ratio < 0.9;
+                currentDebugData.isThumbFolded = dedao_dobrado;
+                
                 const punho_fechado = fingers.every(f => f === 0);
 
                 // --- STATE MACHINE UPDATE (PER HAND) ---
@@ -192,6 +214,12 @@ const LiveHandTracker = () => {
              setDebugText("AGUARDANDO GESTO...");
         }
 
+        // UPDATE UI (THROTTLED TO 10 FPS)
+        if (now - stateRef.current.lastDebugTime > 100) {
+            setDebugInfo(currentDebugData);
+            stateRef.current.lastDebugTime = now;
+        }
+
         canvasCtx.restore();
     }, []);
 
@@ -276,7 +304,7 @@ const LiveHandTracker = () => {
                 </button>
             </div>
 
-            <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden border-4 border-gray-800 shadow-2xl">
+            <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden border-4 border-gray-800 shadow-2xl group">
                 {!cameraActive && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
                         <Hand size={64} className="mb-4 opacity-50" />
@@ -298,6 +326,30 @@ const LiveHandTracker = () => {
                             className="absolute inset-0 w-full h-full object-cover"
                             style={{ transform: "scaleX(-1)" }}
                         />
+                        
+                        {/* DEBUG OVERLAY (Machine Vision Log) */}
+                        <div className="absolute top-4 left-4 bg-black/80 text-green-400 font-mono text-xs p-3 rounded border border-green-500/30 backdrop-blur-sm z-10 w-64 shadow-xl">
+                            <div className="border-b border-green-500/30 mb-2 pb-1 font-bold flex justify-between items-center">
+                                <span>MACHINE_VISION_LOGS</span>
+                                <Activity size={12} className="animate-pulse text-green-500"/>
+                            </div>
+                            <div className="grid grid-cols-2 gap-y-1">
+                                <span className="text-gray-400">Thumb Dist:</span>
+                                <span className={debugInfo.isThumbFolded ? "text-green-400 font-bold" : "text-gray-300"}>
+                                    {debugInfo.thumbRatio ? debugInfo.thumbRatio.toFixed(2) : "0.00"} {debugInfo.isThumbFolded ? "(FOLD)" : ""}
+                                </span>
+                                
+                                <span className="text-gray-400">Fingers:</span>
+                                <span className="text-blue-300 tracking-wider">
+                                    [{debugInfo.fingers.join(' ')}]
+                                </span>
+
+                                <span className="text-gray-400">Together?</span>
+                                <span className={debugInfo.areFingersTogether ? "text-green-400 font-bold" : "text-gray-500"}>
+                                    {debugInfo.areFingersTogether ? "YES" : "NO"}
+                                </span>
+                            </div>
+                        </div>
                     </>
                 )}
             </div>

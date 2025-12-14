@@ -199,7 +199,7 @@ const Home = () => {
       {/* --- Section 2: Aplicações no Dia a Dia --- */}
       <Section title="Visão Computacional no Cotidiano">
         <p className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto">
-          Você já usufruiu ou presenciou a visão computacional hoje, talvez sem perceber. Ela saiu dos filmes de ficção científica e agora vive no seu bolso.
+          Você já usufruiu ou presenciou a visão computacional hoje, talvez sem perceber. Ela saiu dos filmes de ficção científica e agora vive no nosso bolso.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -330,12 +330,12 @@ const Home = () => {
       </Section>
 
       {/* --- Section 5: Teachable Machine --- */}
-      <Section title="Sua Vez: Teachable Machine">
+      <Section title="Para Experimentar: Teachable Machine">
          <div className="flex flex-col items-center gap-8 max-w-6xl mx-auto py-8">
             
             {/* 1. Intro Text */}
             <p className="text-xl text-gray-700 text-center max-w-4xl leading-relaxed">
-               Agora que você conhece a teoria, que tal <strong>prototipar sua própria IA</strong> em minutos? 
+               Uma recomendação para quem quiser explorar mais: o Google disponibiliza essa plataforma gratuita para treinamentos de modelos de classificação no navegador.
                O <strong>Teachable Machine</strong> permite ensinar computadores a reconhecerem <span className="text-blue-600 font-bold">Imagens, Sons e Poses</span>.
             </p>
 
