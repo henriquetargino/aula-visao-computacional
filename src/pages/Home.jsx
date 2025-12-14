@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { ArrowRight, Eye, Layers, Cpu, Code2 } from 'lucide-react';
+import { ArrowRight, Eye, Layers, Cpu, Code2, Linkedin, Github } from 'lucide-react';
 import ScatterImages from '../components/hero/ScatterImages';
 
-const Section = ({ title, children, className = "" }) => (
-  <section className={`py-16 border-b border-gray-100 relative z-10 min-h-screen flex flex-col justify-center ${className}`}>
+const Section = ({ title, children, className = "", fullScreen = true }) => (
+  <section className={`py-16 border-b border-gray-100 relative z-10 ${fullScreen ? 'min-h-screen' : ''} flex flex-col justify-center ${className}`}>
     <div className="max-w-3xl mx-auto px-6 w-full">
       <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">{title}</h2>
       <div className="text-lg md:text-xl text-gray-600 leading-relaxed space-y-6">
@@ -589,7 +589,63 @@ const Home = () => {
           </div>
       </Section>
 
-      {/* --- Section 4: CTA --- */}
+      {/* --- Section 8: Social Links --- */}
+      <Section title="Gostou do Projeto?" fullScreen={false} className="bg-slate-50 border-none pb-0 pt-24">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto mb-12">
+              
+              {/* LinkedIn Post */}
+              <a 
+                href="https://www.linkedin.com/posts/henriquetargino_datascience-python-computervision-activity-7398759818959876096-HeEO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE3MTUABr4cje47qJcyWiAb4GZmwYQTKSbg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 w-full bg-white p-8 rounded-2xl border border-blue-100 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-blue-300 transition-all group"
+              >
+                  <div className="flex items-center gap-4 mb-4">
+                     <div className="bg-blue-600 p-3 rounded-full text-white group-hover:scale-110 transition-transform">
+                        <Linkedin size={28} />
+                     </div>
+                     <div>
+                        <h4 className="font-bold text-xl text-slate-800 group-hover:text-blue-600 transition-colors">Post no LinkedIn</h4>
+                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Conecte-se</p>
+                     </div>
+                  </div>
+                  <p className="text-slate-600 text-base leading-relaxed">
+                     Veja a publicação original sobre este projeto. Lá eu detalho um pouco mais sobre os desafios técnicos dessa construção.
+                  </p>
+              </a>
+
+              {/* GitHub Repo */}
+              <a 
+                href="https://github.com/henriquetargino/sos_computer_vision"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 w-full bg-slate-900 p-8 rounded-2xl border border-slate-700 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:bg-slate-800 transition-all group"
+              >
+                  <div className="flex items-center gap-4 mb-4">
+                     <div className="bg-white/10 p-3 rounded-full text-white group-hover:scale-110 transition-transform">
+                        <Github size={28} />
+                     </div>
+                     <div>
+                        <h4 className="font-bold text-xl text-white group-hover:text-blue-300 transition-colors">Código Fonte</h4>
+                        <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Open Source</p>
+                     </div>
+                  </div>
+                  <p className="text-slate-300 text-base leading-relaxed">
+                     Deixe uma ⭐️ no repositório! O código está todo lá para você estudar, clonar e criar sua própria versão.
+                  </p>
+              </a>
+
+          </div>
+          
+          {/* Visual Connector to next section */}
+          <div className="flex justify-center -mb-8 relative z-20">
+              <div className="animate-bounce bg-white p-2 rounded-full shadow-md text-blue-600">
+                  <ArrowRight size={24} className="rotate-90" />
+              </div>
+          </div>
+      </Section>
+
+      {/* --- Section 9: CTA --- */}
       <Section title="Hora da Prática!">
         <div className="bg-gradient-to-br from-blue-900 to-indigo-900 p-12 rounded-3xl text-center text-white relative overflow-hidden shadow-2xl mx-auto max-w-4xl">
            {/* Background Decoration */}
