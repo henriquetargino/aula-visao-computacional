@@ -3,10 +3,10 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { ArrowRight, Eye, Layers, Cpu, Code2, Linkedin, Github } from 'lucide-react';
 import ScatterImages from '../components/hero/ScatterImages';
 
-const Section = ({ title, children, className = "", fullScreen = true }) => (
+const Section = ({ title, children, className = "", fullScreen = true, titleClassName = "mb-12" }) => (
   <section className={`py-16 border-b border-gray-100 relative z-10 ${fullScreen ? 'min-h-screen' : ''} flex flex-col justify-center ${className}`}>
     <div className="max-w-3xl mx-auto px-6 w-full">
-      <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">{title}</h2>
+      <h2 className={`text-4xl md:text-5xl font-bold text-gray-800 text-center ${titleClassName}`}>{title}</h2>
       <div className="text-lg md:text-xl text-gray-600 leading-relaxed space-y-6">
         {children}
       </div>
@@ -330,8 +330,8 @@ const Home = () => {
       </Section>
 
       {/* --- Section 5: Teachable Machine --- */}
-      <Section title="Para Experimentar: Teachable Machine">
-         <div className="flex flex-col items-center gap-8 max-w-6xl mx-auto py-8">
+      <Section title="Para Experimentar: Teachable Machine" titleClassName="mb-8" className="!py-10">
+         <div className="flex flex-col items-center gap-4 max-w-6xl mx-auto py-2">
             
             {/* 1. Intro Text */}
             <p className="text-xl text-gray-700 text-center max-w-4xl leading-relaxed">
