@@ -71,7 +71,7 @@ const Sidebar = () => {
         <div className="flex justify-center gap-6">
           <SocialLink href="https://www.linkedin.com/in/henriquetargino" icon={Linkedin} />
           <SocialLink href="https://github.com/henriquetargino" icon={Github} />
-          <SocialLink href="https://discord.com/users/henrique_targino" icon={DiscordLogo} isCustom />
+          <SocialLink href="https://discord.gg/ckbBZ58G" icon={DiscordLogo} isCustom />
         </div>
       </div>
     </aside>
